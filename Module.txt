@@ -1,0 +1,10 @@
+﻿Name:  Taxonomy Select Term Filter
+AntiForgery: enabled
+Author: Richard Garside
+Website: http://www.nogginbox.co.uk
+Version: 1.0
+OrchardVersion: 1.6
+Description: Lets the site user choose the taxonomy terms to display in a projection.
+Features:
+    NogginBox.TaxonomySelectTermFilter:
+        Description: Description for feature NogginBox.TaxonomySelectTermFilter.
