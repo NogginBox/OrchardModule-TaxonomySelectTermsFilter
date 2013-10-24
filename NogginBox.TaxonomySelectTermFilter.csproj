@@ -64,6 +64,9 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Placement.info" />
+    <Content Include="Views\EditorTemplates\Parts\TaxonomySelectTermWidget.cshtml" />
+    <None Include="Views\Parts\TaxonomySelectTermWidget.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Properties\AssemblyInfo.cs" />
     <Content Include="Module.txt" />
@@ -86,11 +89,18 @@
       <Name>Orchard.Taxonomies</Name>
     </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Compile Include="Drivers\TaxonomySelectTermWidgetDriver.cs" />
     <Compile Include="Filters\SelectTermsFilter.cs" />
     <Compile Include="Filters\TermsFilterForms.cs" />
+    <Compile Include="Handlers\TaxonomySelectTermWidgetHandler.cs" />
+    <Compile Include="Migrations.cs" />
+    <Compile Include="Models\TaxonomySelectTermWidgetSettings.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Include="Views\Web.config" />
+  </ItemGroup>
+  <ItemGroup />
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
