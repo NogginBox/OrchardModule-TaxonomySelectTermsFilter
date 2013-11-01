@@ -1,5 +1,12 @@
-﻿<ul>
-@foreach(var term in Model.Terms) {
-	<li>@term.Name</li>
+﻿@using System.Globalization
+@using Orchard.Taxonomies.Models
+
+@using(Html.BeginForm(null, null, FormMethod.Get))
+{
+	<select name="terms">
+	@foreach(TermPart term in Model.Terms) {
+		@Html.SelectOption(term.Id.ToString(CultureInfo.InvariantCulture), false, term.Name)
+	}
+	</select>
+	<button>@T("Search")</button>
 }
-</ul>
