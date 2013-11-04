@@ -1,7 +1,7 @@
 ﻿@using System.Globalization
 @using Orchard.Taxonomies.Models
 
-@using(Html.BeginForm(null, null, FormMethod.Get))
+@using(Html.BeginFormAntiForgeryPost(null, FormMethod.Get))
 {
 	<select name="terms">
 	@foreach(TermPart term in Model.Terms) {
