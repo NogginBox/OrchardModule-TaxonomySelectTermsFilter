@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Collections.Specialized;
+﻿using System;
 using System.Web.Mvc;
 using NogginBox.TaxonomySelectTermFilter.Models;
+using Orchard;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Taxonomies.Services;
@@ -10,10 +10,12 @@ namespace NogginBox.TaxonomySelectTermFilter.Drivers
 {
 	public class TaxonomySelectTermWidgetDriver: ContentPartDriver<TaxonomySelectTermWidgetPart>
 	{
+		private readonly IOrchardServices _services;
 		private readonly ITaxonomyService _taxonomyService;
 
-		public TaxonomySelectTermWidgetDriver(ITaxonomyService taxonomyService)
+		public TaxonomySelectTermWidgetDriver(IOrchardServices services, ITaxonomyService taxonomyService)
 		{
+			_services = services;
 			_taxonomyService = taxonomyService;
 		}
 
@@ -23,8 +25,11 @@ namespace NogginBox.TaxonomySelectTermFilter.Drivers
 			var taxonomy = _taxonomyService.GetTaxonomy(part.TaxonomyId);
 			var terms = taxonomy.Terms;
 
+			int lastQueryTermId;
+			Int32.TryParse(_services.WorkContext.HttpContext.Request.QueryString["Terms"], out lastQueryTermId);
+
 			return ContentShape("Parts_TaxonomySelectTermWidget", () => shapeHelper.Parts_TaxonomySelectTermWidget(
-				Terms: terms));
+				Terms: terms, LastTermId: lastQueryTermId));
 		}
 
 		//GET
