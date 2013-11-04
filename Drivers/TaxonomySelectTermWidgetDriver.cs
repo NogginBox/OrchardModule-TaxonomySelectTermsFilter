@@ -1,4 +1,7 @@
-﻿using NogginBox.TaxonomySelectTermFilter.Models;
+﻿using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.Web.Mvc;
+using NogginBox.TaxonomySelectTermFilter.Models;
 using Orchard.ContentManagement;
 using Orchard.ContentManagement.Drivers;
 using Orchard.Taxonomies.Services;
@@ -20,25 +23,28 @@ namespace NogginBox.TaxonomySelectTermFilter.Drivers
 			var taxonomy = _taxonomyService.GetTaxonomy(part.TaxonomyId);
 			var terms = taxonomy.Terms;
 
-            return ContentShape("Parts_TaxonomySelectTermWidget", () => shapeHelper.Parts_TaxonomySelectTermWidget(
-                Terms: terms));
-        }
+			return ContentShape("Parts_TaxonomySelectTermWidget", () => shapeHelper.Parts_TaxonomySelectTermWidget(
+				Terms: terms));
+		}
 
-        //GET
-        protected override DriverResult Editor(TaxonomySelectTermWidgetPart part, dynamic shapeHelper)
+		//GET
+		protected override DriverResult Editor(TaxonomySelectTermWidgetPart part, dynamic shapeHelper)
 		{
-            return ContentShape("Parts_TaxonomySelectTermWidget_Edit",
-                () => shapeHelper.EditorTemplate(
-                    TemplateName: "Parts/TaxonomySelectTermWidget",
-                    Model: part,
-                    Prefix: Prefix));
-        }
+			var taxonomies = _taxonomyService.GetTaxonomies();
+			part.TaxonomyOptions = new SelectList(taxonomies, "Id", "Name");
 
-        //POST
-        protected override DriverResult Editor(TaxonomySelectTermWidgetPart part, IUpdateModel updater, dynamic shapeHelper)
+			return ContentShape("Parts_TaxonomySelectTermWidget_Edit",
+				() => shapeHelper.EditorTemplate(
+					TemplateName: "Parts/TaxonomySelectTermWidget",
+					Model: part,
+					Prefix: Prefix));
+		}
+
+		//POST
+		protected override DriverResult Editor(TaxonomySelectTermWidgetPart part, IUpdateModel updater, dynamic shapeHelper)
 		{
-            updater.TryUpdateModel(part, Prefix, null, null);
-            return Editor(part, shapeHelper);
-        }
+			updater.TryUpdateModel(part, Prefix, null, null);
+			return Editor(part, shapeHelper);
+		}
 	}
 }

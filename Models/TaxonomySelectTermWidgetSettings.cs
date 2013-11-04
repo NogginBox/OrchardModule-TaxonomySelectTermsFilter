@@ -1,4 +1,5 @@
-﻿using Orchard.ContentManagement;
+﻿using System.Web.Mvc;
+using Orchard.ContentManagement;
 using Orchard.ContentManagement.Records;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,5 +18,10 @@ namespace NogginBox.TaxonomySelectTermFilter.Models
 			get { return Record.TaxonomyId; }
 			set { Record.TaxonomyId = value; }
 		}
+
+		/// <summary>
+		/// Required by editor to populate TaxonomyId, not persisted
+		/// </summary>
+		public SelectList TaxonomyOptions { get; set; }
 	}
 }

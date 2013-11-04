@@ -6,5 +6,7 @@ Version: 1.0
 OrchardVersion: 1.6
 Description: Lets the site user choose the taxonomy terms to display in a projection.
 Features:
-    NogginBox.TaxonomySelectTermFilter:
-        Description: Description for feature NogginBox.TaxonomySelectTermFilter.
+	NogginBox.TaxonomySelectTermFilter:
+		Description: Description for feature NogginBox.TaxonomySelectTermFilter.
+		Category: Query filters
+		Dependencies: Orchard.Taxonomies

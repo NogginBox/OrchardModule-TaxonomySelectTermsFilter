@@ -1,3 +1,9 @@
 ﻿@model NogginBox.TaxonomySelectTermFilter.Models.TaxonomySelectTermWidgetPart
-		   
-<h1>Todo: Editor template</h1>
+	   
+<fieldset>
+	<div>
+		@Html.LabelFor(m => m.TaxonomyId, T("Taxonomy"))
+		@Html.DropDownListFor(m => m.TaxonomyId, Model.TaxonomyOptions)
+		<span class="hint">@T("Taxonomy to show terms from")</span>
+	</div>
+</fieldset>
