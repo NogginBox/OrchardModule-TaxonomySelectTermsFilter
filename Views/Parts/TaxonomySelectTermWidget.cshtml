@@ -1,11 +1,16 @@
 ﻿@using System.Globalization
+@using System.Text
 @using Orchard.Taxonomies.Models
 
 @using(Html.BeginForm(null, null, FormMethod.Get))
 {
 	<select name="terms">
 	@foreach(TermPart term in Model.Terms) {
-		@Html.SelectOption(term.Id.ToString(CultureInfo.InvariantCulture), false, term.Name)
+		var depth = Math.Max(term.FullPath.Split('/').Count() - 2, 0) * 2;
+		var termName = new StringBuilder().Append('-', depth);
+		termName.Append(term.Name);
+
+		@Html.SelectOption(term.Id.ToString(CultureInfo.InvariantCulture), false, termName.ToString())
 	}
 	</select>
 	<button>@T("Search")</button>
