@@ -26,7 +26,7 @@ namespace NogginBox.TaxonomySelectTermFilter.Drivers
 			var terms = taxonomy.Terms;
 
 			int lastQueryTermId;
-			Int32.TryParse(_services.WorkContext.HttpContext.Request.QueryString["Terms"], out lastQueryTermId);
+			Int32.TryParse(_services.WorkContext.HttpContext.Request.Form["Terms"], out lastQueryTermId);
 
 			return ContentShape("Parts_TaxonomySelectTermWidget", () => shapeHelper.Parts_TaxonomySelectTermWidget(
 				Terms: terms, LastTermId: lastQueryTermId));

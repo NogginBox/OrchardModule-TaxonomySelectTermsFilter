@@ -41,8 +41,8 @@ namespace NogginBox.TaxonomySelectTermFilter.Filters
 
         public void ApplyFilter(FilterContext context)
 		{
-			var queryStringParams = _httpContextAccessor.Current().Request.QueryString;
-			var termIds = queryStringParams["Terms"];
+			var queryParams = _httpContextAccessor.Current().Request.Form;
+			var termIds = queryParams["Terms"];
 
             if (!String.IsNullOrEmpty(termIds)) {
                 var ids = termIds.Split(new[] { ',' }).Select(Int32.Parse).ToArray();

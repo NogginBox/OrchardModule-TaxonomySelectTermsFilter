@@ -1,3 +1,4 @@
 syntax: glob
 bin/*
 NogginBox.TaxonomySelectTermFilter.csproj.user
+obj/Debug/*
