@@ -1,9 +1,12 @@
 ﻿@using System.Text
 @using Orchard.Taxonomies.Models
-
+@{
+	Script.Require("jQuery").AtHead();
+	//Script.Include("/Themes/ISkyTheme/Scripts/TickScroll.min.js").AtHead(); 
+} 
 @using(Html.BeginFormAntiForgeryPost())
 {
-	<select name="terms">
+	<select name="terms" class="tax-terms">
 		@Html.SelectOption("", false, "All")
 		@foreach(TermPart term in Model.Terms) {
 			var depth = Math.Max(term.FullPath.Split('/').Count() - 2, 0) * 2;
@@ -15,3 +18,53 @@
 	</select>
 	<button>@T("Search")</button>
 }
+<script type="text/javascript">
+	$(window).load(function () {
+		var selectbox = $(".tax-terms")[0];
+		var terms = tList(0, 0, selectbox, selectbox.length);
+		populateTerms(terms, selectbox);
+
+		// Todo:
+		// 1. Don't lose selected option on initial load
+		// 2. Create second dropdown
+		// 3. Populate with 2nd level terms onchange
+	});
+
+	function tList(place, level, selectOptions, numOptions) {
+		var terms = [];
+		for (var i = place; i < numOptions; i++) {
+			var currentLevel = indentLevel(selectOptions[i].text);
+			if (currentLevel == level) {
+				var text = selectOptions[i].text.substring(level * 2);
+				terms.push({ value: selectOptions[i].value, text: text });
+			}
+			else if (currentLevel > level) {
+				var subTerms = tList(i, currentLevel, selectOptions, numOptions);
+				terms[terms.length - 1].terms = subTerms;
+				i += subTerms.length - 1;
+			}
+			else {
+				return terms;
+			}
+
+		}
+		return terms;
+	}
+
+	function indentLevel(text) {
+		var textLength = text.length;
+		for (var i = 0; i < textLength; i++) {
+			if (text.charAt(i) != '-') return i / 2;
+		}
+		return 0;
+	}
+
+	function populateTerms(terms, selectbox) {
+		selectbox.innerHTML = null;
+		var termsLength = terms.length;
+		for (var i = 0; i < termsLength; i++) {
+			selectbox.add(new Option(terms[i].text, terms[i].value));
+		}
+	}
+</script>
+@* <script$(window).load(function () {$(".widget-headlines").TickScroll();});</script> *@
