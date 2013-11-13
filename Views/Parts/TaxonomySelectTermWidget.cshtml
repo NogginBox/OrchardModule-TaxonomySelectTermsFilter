@@ -32,9 +32,6 @@
 		var currentIndex = firstSelected(allTerms);
 		newSelect[0].selectedIndex = currentIndex;
 		populateSubTermsFor(currentIndex, true);
-
-		// Todo:
-		// 1. Add all option for 2nd level
 	});
 
 	function tList(place, level, selectOptions, numOptions) {
@@ -48,7 +45,7 @@
 			else if (currentLevel > level) {
 				var subTerms = tList(i, currentLevel, selectOptions, numOptions);
 				terms[terms.length - 1].terms = subTerms;
-				terms[terms.length - 1].selected = anySelected(subTerms);
+				terms[terms.length - 1].selected = terms[terms.length - 1].selected || anySelected(subTerms);
 				i += subTerms.length - 1;
 			}
 			else {
@@ -60,7 +57,7 @@
 	}
 
 	function anySelected(terms) {
-		return firstSelected(terms) != null;
+		return firstSelected(terms) != -1;
 	}
 
 	function firstSelected(terms) {
@@ -68,7 +65,7 @@
 		for (var i = 0; i < termsLength; i++) {
 			if (terms[i].selected) return i;
 		}
-		return null;
+		return -1;
 	}
 
 	function indentLevel(text) {
@@ -79,8 +76,13 @@
 		return 0;
 	}
 
-	function populateTerms(terms, selectbox, selectedIndex) {
+	function populateTerms(terms, selectbox, selectedIndex, allId) {
 		selectbox.innerHTML = null;
+		if (allId > 0) {
+			selectbox.add(new Option("All", allId));
+		}
+		if (terms == null) return;
+
 		var termsLength = terms.length;
 		for (var i = 0; i < termsLength; i++) {
 			selectbox.add(new Option(terms[i].text, terms[i].value));
@@ -96,11 +98,10 @@
 		selectbox[0].innerHTML = null;
 		var subTerms = allTerms[i].terms;
 		var subSelectedIndex = checkSelected
-			? firstSelected(subTerms)
+			? firstSelected(subTerms) + 1
 			: 0;
-		if (subTerms) {
-			populateTerms(subTerms, selectbox[0], subSelectedIndex);
-		}
+
+		populateTerms(subTerms, selectbox[0], subSelectedIndex, allTerms[i].value);
 	}
 </script>
 @* <script$(window).load(function () {$(".widget-headlines").TickScroll();});</script> *@
