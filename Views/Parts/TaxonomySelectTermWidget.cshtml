@@ -26,59 +26,80 @@
 		allTerms = tList(0, 0, selectbox[0], selectbox[0].length);
 		var newSelect = $("<select/>");
 		newSelect.change(onSelectOption);
-		populateTerms(allTerms, newSelect[0]);
+		populateTerms(allTerms, newSelect[0], 0);
 		selectbox.before(newSelect);
-		
-		selectbox[0].innerHTML = null;
+
+		var currentIndex = firstSelected(allTerms);
+		newSelect[0].selectedIndex = currentIndex;
+		populateSubTermsFor(currentIndex, true);
 
 		// Todo:
-		// 1. Don't lose selected option on initial load
+		// 1. Add all option for 2nd level
 	});
-	
+
 	function tList(place, level, selectOptions, numOptions) {
 		var terms = [];
-		for (var i=place; i<numOptions; i++) {
+		for (var i = place; i < numOptions; i++) {
 			var currentLevel = indentLevel(selectOptions[i].text);
 			if (currentLevel == level) {
 				var text = selectOptions[i].text.substring(level * 2);
-				terms.push({ value: selectOptions[i].value, text: text });
+				terms.push({ value: selectOptions[i].value, text: text, selected: selectOptions[i].selected });
 			}
 			else if (currentLevel > level) {
 				var subTerms = tList(i, currentLevel, selectOptions, numOptions);
 				terms[terms.length - 1].terms = subTerms;
+				terms[terms.length - 1].selected = anySelected(subTerms);
 				i += subTerms.length - 1;
 			}
 			else {
 				return terms;
 			}
-			
+
 		}
 		return terms;
 	}
-	
+
+	function anySelected(terms) {
+		return firstSelected(terms) != null;
+	}
+
+	function firstSelected(terms) {
+		var termsLength = terms.length;
+		for (var i = 0; i < termsLength; i++) {
+			if (terms[i].selected) return i;
+		}
+		return null;
+	}
+
 	function indentLevel(text) {
 		var textLength = text.length;
-		for(var i=0; i<textLength; i++) {
+		for (var i = 0; i < textLength; i++) {
 			if (text.charAt(i) != '-') return i / 2;
 		}
 		return 0;
 	}
-	
-	function populateTerms(terms, selectbox) {
+
+	function populateTerms(terms, selectbox, selectedIndex) {
 		selectbox.innerHTML = null;
 		var termsLength = terms.length;
-		for(var i=0; i<termsLength; i++) {
+		for (var i = 0; i < termsLength; i++) {
 			selectbox.add(new Option(terms[i].text, terms[i].value));
 		}
+		selectbox.selectedIndex = selectedIndex;
 	}
-	
+
 	function onSelectOption(e) {
-		var subTerms = allTerms[e.currentTarget.selectedIndex].terms;
-		if(subTerms) {
-			populateTerms(subTerms, selectbox[0]);
-		}
-		else {
-			selectbox[0].innerHTML = null;
+		populateSubTermsFor(e.currentTarget.selectedIndex, false);
+	}
+
+	function populateSubTermsFor(i, checkSelected) {
+		selectbox[0].innerHTML = null;
+		var subTerms = allTerms[i].terms;
+		var subSelectedIndex = checkSelected
+			? firstSelected(subTerms)
+			: 0;
+		if (subTerms) {
+			populateTerms(subTerms, selectbox[0], subSelectedIndex);
 		}
 	}
 </script>
