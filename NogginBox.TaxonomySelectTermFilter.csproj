@@ -98,6 +98,7 @@
     <Compile Include="Handlers\TaxonomySelectTermWidgetHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\TaxonomySelectTermWidgetSettings.cs" />
+    <Compile Include="ResourceManifest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

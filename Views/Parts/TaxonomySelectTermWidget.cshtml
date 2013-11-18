@@ -1,8 +1,7 @@
 ﻿@using System.Text
 @using Orchard.Taxonomies.Models
 @{
-	Script.Require("jQuery").AtHead();
-	Script.Include("~/Modules/NogginBox.TaxonomySelectTermFilter/Scripts/SimpleSelectTree.js").AtHead(); 
+	Script.Require("SimpleSelectTree").AtHead();
 } 
 @using(Html.BeginFormAntiForgeryPost())
 {
