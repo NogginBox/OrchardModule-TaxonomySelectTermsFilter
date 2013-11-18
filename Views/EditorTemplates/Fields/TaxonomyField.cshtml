@@ -1,0 +1,37 @@
+﻿@model Orchard.Taxonomies.ViewModels.TaxonomyFieldViewModel
+@using System.Text
+@using Orchard.Utility.Extensions;
+@{
+	// This template overrides the base field template and ignores all the settings
+
+	Script.Require("SimpleSelectTree").AtHead();
+	int termIndex = 0;
+}
+
+<fieldset class="taxonomy-wrapper" data-name-prefix="@Html.FieldNameFor(m => m)" data-id-prefix="@Html.FieldIdFor(m => m)">
+	<legend @if(Model.Settings.Required) { <text>class="required"</text> }>@Model.DisplayName.CamelFriendly()</legend>
+	@if (!String.IsNullOrWhiteSpace(Model.Settings.Hint))
+	{
+		<span class="hint">@Model.Settings.Hint</span>
+	}
+	@Html.HiddenFor(m => m.TaxonomyId)
+	
+	@* Hidden list of all term ids required by field driver *@
+	@foreach (var entry in Model.Terms) {
+		@Html.HiddenFor(m => m.Terms[termIndex].Id)
+		termIndex++;
+	}
+
+	<select name="@Html.FieldNameFor(m => m.SingleTermId)" class="tax-terms">
+		@Html.SelectOption("", false, "All")
+		@foreach(var term in Model.Terms) {
+			var depth = Math.Max(term.Path.Split('/').Count() - 2, 0) * 2;
+			var termName = new StringBuilder().Append('-', depth);
+			termName.Append(term.Name);
+
+			@Html.SelectOption(term.Id, term.IsChecked, termName.ToString())
+		}
+	</select>
+
+</fieldset>
+<script> $(window).load(function () { $(".tax-terms").SimpleSelectTree(); });</script>

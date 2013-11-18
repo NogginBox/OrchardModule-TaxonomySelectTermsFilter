@@ -69,6 +69,7 @@
     <Content Include="Views\EditorTemplates\Parts\TaxonomySelectTermWidget.cshtml" />
     <Content Include="Scripts\Web.config" />
     <None Include="Views\Parts\TaxonomySelectTermWidget.cshtml" />
+    <None Include="Views\EditorTemplates\Fields\TaxonomyField.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Properties\AssemblyInfo.cs" />
     <Content Include="Module.txt" />
