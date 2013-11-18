@@ -1,12 +1,9 @@
 ﻿@using System.Text
 @using Orchard.Taxonomies.Models
-@{
-	Script.Require("jQuery").AtHead();
-	Script.Include("~/Modules/NogginBox.TaxonomySelectTermFilter/Scripts/SimpleSelectTree.js").AtHead(); 
-} 
+
 @using(Html.BeginFormAntiForgeryPost())
 {
-	<select name="terms" class="tax-terms">
+	<select name="terms">
 		@Html.SelectOption("", false, "All")
 		@foreach(TermPart term in Model.Terms) {
 			var depth = Math.Max(term.FullPath.Split('/').Count() - 2, 0) * 2;
@@ -18,4 +15,3 @@
 	</select>
 	<button>@T("Search")</button>
 }
-<script> $(window).load(function () {$(".tax-terms").SimpleSelectTree();});</script>
