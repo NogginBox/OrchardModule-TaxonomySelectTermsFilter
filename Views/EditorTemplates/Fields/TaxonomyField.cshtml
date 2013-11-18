@@ -1,6 +1,6 @@
 ﻿@model Orchard.Taxonomies.ViewModels.TaxonomyFieldViewModel
 @using System.Text
-@using Orchard.Utility.Extensions;
+@using Orchard.Utility.Extensions
 @{
 	// This template overrides the base field template and ignores all the settings
 
@@ -9,7 +9,9 @@
 }
 
 <fieldset class="taxonomy-wrapper" data-name-prefix="@Html.FieldNameFor(m => m)" data-id-prefix="@Html.FieldIdFor(m => m)">
-	<legend @if(Model.Settings.Required) { <text>class="required"</text> }>@Model.DisplayName.CamelFriendly()</legend>
+	<legend @if(Model.Settings.Required) { <text>class="required"</text> }>
+		@Model.Name.CamelFriendly()
+	</legend>
 	@if (!String.IsNullOrWhiteSpace(Model.Settings.Hint))
 	{
 		<span class="hint">@Model.Settings.Hint</span>
