@@ -65,8 +65,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Placement.info" />
+    <Content Include="Scripts\SimpleSelectTree.js" />
     <Content Include="Views\EditorTemplates\Parts\TaxonomySelectTermWidget.cshtml" />
+    <Content Include="Scripts\Web.config" />
     <None Include="Views\Parts\TaxonomySelectTermWidget.cshtml" />
+    <None Include="Views\EditorTemplates\Fields\TaxonomyField.cshtml" />
     <Content Include="Web.config" />
     <Content Include="Properties\AssemblyInfo.cs" />
     <Content Include="Module.txt" />
@@ -96,6 +99,7 @@
     <Compile Include="Handlers\TaxonomySelectTermWidgetHandler.cs" />
     <Compile Include="Migrations.cs" />
     <Compile Include="Models\TaxonomySelectTermWidgetSettings.cs" />
+    <Compile Include="ResourceManifest.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Web.config" />

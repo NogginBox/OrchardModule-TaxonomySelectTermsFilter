@@ -1,0 +1,17 @@
+﻿@using System.Text
+@using Orchard.Taxonomies.Models
+
+@using(Html.BeginFormAntiForgeryPost())
+{
+	<select name="terms">
+		@Html.SelectOption("", false, "All")
+		@foreach(TermPart term in Model.Terms) {
+			var depth = Math.Max(term.FullPath.Split('/').Count() - 2, 0) * 2;
+			var termName = new StringBuilder().Append('-', depth);
+			termName.Append(term.Name);
+
+			@Html.SelectOption((int)Model.LastTermId, term.Id, termName.ToString())
+		}
+	</select>
+	<button>@T("Search")</button>
+}
