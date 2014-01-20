@@ -13,9 +13,10 @@
 							terms.push({ value: selectOptions[i].value, text: text, selected: selectOptions[i].selected });
 						}
 						else if (currentLevel > level) {
+							var termsIndex = length(terms) - 1;
 							var subTerms = tList(i, currentLevel, selectOptions, numOptions);
-							terms[terms.length - 1].terms = subTerms;
-							terms[terms.length - 1].selected = terms[terms.length - 1].selected || anySelected(subTerms);
+							terms[termsIndex].terms = subTerms;
+							terms[termsIndex].selected = terms[termsIndex].selected || anySelected(subTerms);
 							i += subTerms.length - 1;
 						}
 						else {
@@ -42,7 +43,7 @@
 				}
 
 				function firstSelected(terms) {
-					var termsLength = terms.length;
+					var termsLength = length(terms);
 					for (var i = 0; i < termsLength; i++) {
 						if (terms[i].selected) return i;
 					}
@@ -57,20 +58,27 @@
 					return 0;
 				}
 
+				function length(thing) {
+					return (thing == null) ? 0 : thing.length;
+				}
+
 				function populateTerms(terms, toSelectBox, selectedIndex, allId) {
 					toSelectBox.innerHTML = null;
+					var termsLength = length(terms);
+
 					if (allId > 0) {
 						toSelectBox.add(new Option("All", allId));
 					}
-					if (terms == null || terms.length == 0) {
+
+					if (terms == null || termsLength == 0) {
 						$(toSelectBox).hide();
 						return;
 					}
 					else {
 						$(toSelectBox).show();
 					}
-
-					var termsLength = terms.length;
+					
+					
 					for (var i = 0; i < termsLength; i++) {
 						toSelectBox.add(new Option(terms[i].text, terms[i].value));
 					}
