@@ -62,7 +62,13 @@
 					if (allId > 0) {
 						toSelectBox.add(new Option("All", allId));
 					}
-					if (terms == null) return;
+					if (terms == null || terms.length == 0) {
+						$(toSelectBox).hide();
+						return;
+					}
+					else {
+						$(toSelectBox).show();
+					}
 
 					var termsLength = terms.length;
 					for (var i = 0; i < termsLength; i++) {
