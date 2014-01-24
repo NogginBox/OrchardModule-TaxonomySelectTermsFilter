@@ -1,9 +1,11 @@
 ﻿@using System.Text
 @using Orchard.Taxonomies.Models
-
+@{
+	Script.Require("SimpleSelectTree").AtHead();
+}
 @using(Html.BeginFormAntiForgeryPost())
 {
-	<select name="terms">
+	<select name="terms" class="tax-terms">
 		@Html.SelectOption("", false, "All")
 		@foreach(TermPart term in Model.Terms) {
 			var depth = Math.Max(term.FullPath.Split('/').Count() - 2, 0) * 2;
@@ -15,3 +17,4 @@
 	</select>
 	<button>@T("Search")</button>
 }
+<script>$(window).load(function () { $(".tax-terms").SimpleSelectTree(); });</script>
