@@ -12,10 +12,6 @@
 	<legend @if(Model.Settings.Required) { <text>class="required"</text> }>
 		@Model.Name.CamelFriendly()
 	</legend>
-	@if (!String.IsNullOrWhiteSpace(Model.Settings.Hint))
-	{
-		<span class="hint">@Model.Settings.Hint</span>
-	}
 	@Html.HiddenFor(m => m.TaxonomyId)
 	
 	@* Hidden list of all term ids required by field driver *@
@@ -34,6 +30,9 @@
 			@Html.SelectOption(term.Id, term.IsChecked, termName.ToString())
 		}
 	</select>
-
+	@if (!String.IsNullOrWhiteSpace(Model.Settings.Hint))
+	{
+		<br /><span class="hint">@Model.Settings.Hint</span>
+	}
 </fieldset>
 <script> $(window).load(function () { $(".tax-terms").SimpleSelectTree(); });</script>
