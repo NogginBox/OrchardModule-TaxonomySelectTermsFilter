@@ -67,7 +67,7 @@
 					var termsLength = length(terms);
 
 					if (allId > 0) {
-						toSelectBox.add(new Option("All", allId));
+						toSelectBox.add(new Option(allTerms[0].text, allId));
 					}
 
 					if (terms == null || termsLength == 0) {

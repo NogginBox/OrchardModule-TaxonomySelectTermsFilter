@@ -25,7 +25,7 @@
 	}
 
 	<select name="@Html.FieldNameFor(m => m.SingleTermId)" class="tax-terms">
-		@Html.SelectOption("", false, "None")
+		@Html.SelectOption("", false, "Please select")
 		@foreach(var term in Model.Terms) {
 			var depth = Math.Max(term.Path.Split('/').Count() - 2, 0) * 2;
 			var termName = new StringBuilder().Append('-', depth);
